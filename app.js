@@ -15,7 +15,7 @@ var corsNetlify = {
   origin: "https://frolicking-cat-20598e.netlify.app",
   optionsSuccessStatus: 200,
 };
-app.use(cors(corsNetlify));
+app.use(cors());
 app.use("/api/employee", employeeRoute);
 
 const port = process.env.PORT || 5000;
