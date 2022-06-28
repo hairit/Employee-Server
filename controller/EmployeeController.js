@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 const Employee = require("../Models/Employee.js");
 // const Solver = require("../Solver.js");
-mongoose.connect("mongodb://localhost:27017/manager");
+mongoose.connect(
+  "mongodb+srv://marcus:marcus@manager.oyxqgah.mongodb.net/manager?retryWrites=true&w=majority"
+);
 
 const getEmployees = async (req, res) => {
   try {
