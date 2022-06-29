@@ -1,7 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const employeeRoute = require("./routes/EmployeeRoute.js");
-
+const mongoose = require("mongoose");
+mongoose.connect(
+  "mongodb+srv://marcus:marcus@manager.oyxqgah.mongodb.net/manager?retryWrites=true&w=majority"
+);
 require("dotenv").config();
 
 const app = express();
