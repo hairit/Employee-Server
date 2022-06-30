@@ -1,5 +1,6 @@
 const Employee = require("../Models/Employee.js");
 const isValidate = require("../Models/EmployeeValidate.js");
+
 const getEmployees = async (req, res) => {
   try {
     const employees = await Employee.find();
@@ -10,7 +11,43 @@ const getEmployees = async (req, res) => {
   }
 };
 
+const getEmployeesPaging = async (req, res) => {
+  if (req.params._page && req.params._amount) {
+    const _amount = req.params._amount;
+    const employees = await Employee.find();
+    const totalEmployees = employees.length;
+    if (totalEmployees <= _amount) {
+      res.status(200).send({
+        employees: employees,
+        total: employees.length,
+      });
+    } else {
+      const numberOfPage = Math.floor(totalEmployees / _amount) + 1;
+      var employeePages = [];
+      var i = 0;
+      for (var pageNumber = 0; pageNumber < numberOfPage; pageNumber++) {
+        var page = [];
+        var dem = 0;
+        while (dem < _amount) {
+          page.push(employees[i]);
+          if (i === employees.length - 1) break;
+          i++;
+          dem++;
+        }
+        employeePages.push(page);
+      }
+      res.status(200).send({
+        employees: employeePages[req.params._page - 1],
+        total: totalEmployees,
+      });
+    }
+  } else {
+    res.status(400).end();
+  }
+};
+
 const getEmployeeByID = async (req, res) => {
+  console.log(req.params._id);
   if (req.params._id) {
     try {
       const employee = await Employee.findById({ _id: req.params._id });
@@ -25,15 +62,16 @@ const getEmployeeByID = async (req, res) => {
 };
 
 const getEmployeeByName = async (req, res) => {
+  console.log(req.params._name);
   if (req.params._name) {
     try {
-      const employee = await Employee.find({
+      const employees = await Employee.find({
         name: {
           $regex: req.params._name,
           $options: "i",
         },
       });
-      res.status(200).send(employee);
+      res.status(200).send(employees);
     } catch (errol) {
       console.log("something went wrong");
       res.status(400).end();
@@ -88,12 +126,12 @@ const deleteEmployee = async (req, res) => {
       const employee = await Employee.findByIdAndDelete({
         _id: req.params._id,
       });
-      res.status(204).end();
+      res.status(200).send(employee);
     } catch (err) {
       res.status(404).end();
     }
   } else {
-    res.status(404).send("No employee _id to delete");
+    res.status(400).send("No employee _id to delete");
   }
 };
 
@@ -103,3 +141,4 @@ module.exports.addEmployee = addEmployee;
 module.exports.updateEmployee = updateEmployee;
 module.exports.deleteEmployee = deleteEmployee;
 module.exports.getEmployeeByName = getEmployeeByName;
+module.exports.getEmployeesPaging = getEmployeesPaging;
