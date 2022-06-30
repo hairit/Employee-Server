@@ -16,10 +16,10 @@ router.get(
 //       error: "No employee _id",
 //     });
 // });
+router.get("/name/:_name?", EmployeeController.getEmployeeByName);
 router.get("/:_id", EmployeeController.getEmployeeByID);
 // router.param('_id',function (){})
 
-router.get("/name/:_name", EmployeeController.getEmployeeByName);
 router.post("/", EmployeeController.addEmployee);
 router.put("/:_id", EmployeeController.updateEmployee);
 router.delete("/:_id", EmployeeController.deleteEmployee);
