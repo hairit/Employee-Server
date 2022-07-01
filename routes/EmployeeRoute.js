@@ -1,27 +1,20 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const EmployeeController = require("../controller/EmployeeController.js");
+const EmployeeController = require('../controller/EmployeeController.js');
 
-router.get("/", EmployeeController.getEmployees);
+router.get('/', EmployeeController.getEmployees);
+// router.get(
+//   '/page/:_page?/perPage/:_perPage?',
+//   EmployeeController.getEmployeesPaging
+// );
 router.get(
-  "/page/:_page/amount/:_amount",
-  EmployeeController.getEmployeesPaging
+  '/page/:_page?/perPage/:_perPage?',
+  EmployeeController.getEmployeesPagingMongoose
 );
-// router.param("_id", (req, res, next, _id) => {
-//   console.log("first call");
-//   if (_id) {
-//     next();
-//   } else
-//     res.status(400).json({
-//       error: "No employee _id",
-//     });
-// });
-router.get("/name/:_name?", EmployeeController.getEmployeeByName);
-router.get("/:_id", EmployeeController.getEmployeeByID);
-// router.param('_id',function (){})
-
-router.post("/", EmployeeController.addEmployee);
-router.put("/:_id", EmployeeController.updateEmployee);
-router.delete("/:_id", EmployeeController.deleteEmployee);
+router.get('/name/:_name?', EmployeeController.getEmployeeByName);
+router.get('/id/:_id?', EmployeeController.getEmployeeByID);
+router.post('/', EmployeeController.addEmployee);
+router.put('/:_id', EmployeeController.updateEmployee);
+router.delete('/:_id', EmployeeController.deleteEmployee);
 
 module.exports = router;
