@@ -1,15 +1,6 @@
 const Employees = require('../Models/Employees/Employees.js');
 const isValidate = require('../Models/Employees/EmployeeValidate.js');
 
-const getEmployees = async (req, res) => {
-  try {
-    const employees = await Employees.find();
-    res.status(200).send(employees);
-  } catch (err) {
-    res.status(400).send(err);
-  }
-};
-
 const getEmployeesPaging = async (req, res) => {
   if (!req.params._perPage) {
     res.status(400).send('PerPage is invalid');
@@ -76,25 +67,13 @@ const getEmployeesPagingMongoose = async (req, res) => {
             res.status(500).send(err);
           });
       } else {
-        res.status(400).send('Make sure perPage and page > 0 ');
+        res
+          .status(400)
+          .send('Make sure perPage and page is number and greater than 0 ');
       }
     } catch (err) {
       res.status(400).send(err);
     }
-  }
-};
-
-const getEmployeeByID = async (req, res) => {
-  if (req.params._id) {
-    try {
-      const employee = await Employees.findById({ _id: req.params._id });
-      res.status(200).send(employee);
-    } catch (err) {
-      console.log('Server error :' + err);
-      res.status(404).end();
-    }
-  } else {
-    res.status(400).send('_id is empty');
   }
 };
 
@@ -182,8 +161,6 @@ const deleteEmployee = async (req, res) => {
   }
 };
 
-module.exports.getEmployees = getEmployees;
-module.exports.getEmployeeByID = getEmployeeByID;
 module.exports.addEmployee = addEmployee;
 module.exports.updateEmployee = updateEmployee;
 module.exports.deleteEmployee = deleteEmployee;
