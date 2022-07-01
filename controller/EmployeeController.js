@@ -77,7 +77,7 @@ const getEmployeesPagingMongoose = async (req, res) => {
   }
 };
 
-const getEmployeeByName = async (req, res) => {
+const getEmployeesByName = async (req, res) => {
   if (req.params._name) {
     try {
       const employees = await Employees.find({
@@ -164,6 +164,6 @@ const deleteEmployee = async (req, res) => {
 module.exports.addEmployee = addEmployee;
 module.exports.updateEmployee = updateEmployee;
 module.exports.deleteEmployee = deleteEmployee;
-module.exports.getEmployeeByName = getEmployeeByName;
+module.exports.getEmployeesByName = getEmployeesByName;
 module.exports.getEmployeesPaging = getEmployeesPaging;
 module.exports.getEmployeesPagingMongoose = getEmployeesPagingMongoose;

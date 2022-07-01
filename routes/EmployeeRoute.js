@@ -10,7 +10,7 @@ router.get(
   '/page/:_page?/perPage/:_perPage?',
   EmployeeController.getEmployeesPagingMongoose
 );
-router.get('/name/:_name?', EmployeeController.getEmployeeByName);
+router.get('/name/:_name?', EmployeeController.getEmployeesByName);
 router.post('/', EmployeeController.addEmployee);
 router.put('/:_id', EmployeeController.updateEmployee);
 router.delete('/:_id', EmployeeController.deleteEmployee);
